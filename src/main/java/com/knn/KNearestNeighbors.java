@@ -82,9 +82,9 @@ public class KNearestNeighbors {
     }
 
     // Precision
-    public double precision(ArrayList<Integer> predictions, ArrayList<Integer> actual) {
-        int truePositive = 0;
-        int falsePositive = 0;
+//    public double precision(ArrayList<Integer> predictions, ArrayList<Integer> actual) {
+//        int truePositive = 0;
+//        int falsePositive = 0;
 //        for (int i = 0; i < predictions.size(); i++) {
 //            if (Objects.equals(predictions.get(i), 1) && Objects.equals(actual.get(i), 1)) {
 //                truePositive++;
