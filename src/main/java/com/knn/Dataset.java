@@ -22,7 +22,7 @@ public class Dataset {
     public Dataset(String path, boolean shuffle) {
         this.data = readDataset(path);
         if (shuffle) {
-            Collections.shuffle(this.data);
+            Collections.shuffle(this.data.subList(1, this.data.size()));
         }
     }
 
@@ -56,6 +56,10 @@ public class Dataset {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public void removeRow(int index) {
+        this.data.remove(index);
     }
 
 }

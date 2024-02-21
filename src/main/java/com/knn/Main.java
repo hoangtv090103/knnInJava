@@ -27,6 +27,7 @@ public class Main {
                 break;
             }
         }
+        dataset.removeRow(0);
 
         ArrayList<ArrayList<String>> X = new ArrayList<>();
         ArrayList<String> y = new ArrayList<>();
@@ -42,7 +43,7 @@ public class Main {
             ArrayList<Double> doubleRow = new ArrayList<>();
             for (String value : row) {
                 try {
-                    Double.parseDouble(value);
+                    doubleRow.add(Double.parseDouble(value));
                 } catch (NumberFormatException e) {
                     continue;
                 }
@@ -54,7 +55,7 @@ public class Main {
             ArrayList<Double> doubleRow = new ArrayList<>();
             for (String value : row) {
                 try {
-                    Double.parseDouble(value);
+                    doubleRow.add(Double.parseDouble(value));
                 } catch (NumberFormatException e) {
                     continue;
                 }
@@ -67,9 +68,14 @@ public class Main {
         for (String label : dataset.yTrain) {
             irisTrainingLabels.add(uniqueLabels.indexOf(label));
         }
+
         // Fit model
         knn.fit(irisTrainData, irisTrainingLabels);
 
+        ArrayList<Integer> predictions = knn.predict(irisTestData);
+        for (int i = 0; i < predictions.size(); i++) {
+            System.out.println("Predicted: " + uniqueLabels.get(predictions.get(i)) + " Actual: " + dataset.yTest.get(i));
+        }
         System.out.println("Predictions: " + knn.predict(irisTestData));
 
     }
