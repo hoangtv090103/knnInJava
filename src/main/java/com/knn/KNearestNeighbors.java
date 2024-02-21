@@ -1,14 +1,12 @@
 package com.knn;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 public class KNearestNeighbors {
     ArrayList<ArrayList<Double>> trainingData;
     ArrayList<Integer> trainingLabels;
     int k;
-    
+
     public KNearestNeighbors() {
         this.k = 3;
     }
@@ -23,11 +21,11 @@ public class KNearestNeighbors {
         this.trainingLabels = trainingLabels;
     }
 
-
     public ArrayList<Integer> predict(ArrayList<ArrayList<Double>> testData) {
         ArrayList<Integer> predictions = new ArrayList<>();
         for (ArrayList<Double> point : testData) {
-            predictions.add(predictPoint(point));
+            int label = predictPoint(point);
+            predictions.add(label);
         }
         return predictions;
     }
@@ -64,12 +62,36 @@ public class KNearestNeighbors {
         return max.getKey();
     }
 
-
-    public double calculateDistance (ArrayList<Double> point1, ArrayList<Double> point2) {
+    public double calculateDistance(ArrayList<Double> point1, ArrayList<Double> point2) {
         double distance = 0;
         for (int i = 0; i < point1.size(); i++) {
             distance += Math.pow(point1.get(i) - point2.get(i), 2);
         }
         return Math.sqrt(distance);
+    }
+
+    // Accuracy
+    public double accuracy(ArrayList<Integer> predictions, ArrayList<Integer> actual) {
+        int correct = 0;
+        for (int i = 0; i < predictions.size(); i++) {
+            if (Objects.equals(predictions.get(i), actual.get(i))) {
+                correct++;
+            }
+        }
+        return (double) correct / predictions.size();
+    }
+
+    // Precision
+    public double precision(ArrayList<Integer> predictions, ArrayList<Integer> actual) {
+        int truePositive = 0;
+        int falsePositive = 0;
+        for (int i = 0; i < predictions.size(); i++) {
+            if (Objects.equals(predictions.get(i), 1) && Objects.equals(actual.get(i), 1)) {
+                truePositive++;
+            } else if (Objects.equals(predictions.get(i), 1) && Objects.equals(actual.get(i), 0)) {
+                falsePositive++;
+            }
+        }
+        return (double) truePositive / (truePositive + falsePositive);
     }
 }
